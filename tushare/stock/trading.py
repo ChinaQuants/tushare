@@ -89,6 +89,7 @@ def get_hist_data(code=None, start=None, end=None,
             if (code in ct.INDEX_LABELS) & (ktype in ct.K_MIN_LABELS):
                 df = df.drop('turnover', axis=1)
             df = df.set_index('date')
+            df = df.sort_index(ascending = False)
             return df
     raise IOError(ct.NETWORK_URL_ERROR_MSG)
 
@@ -397,8 +398,6 @@ def get_h_data(code, start=None, end=None, autype='qfq',
                 if du.is_holiday(du.today()):
                     preClose = float(rt['price'])
                 else:
-                    print(du.get_hour())
-                    print((du.get_hour() > 9) & (du.get_hour() < 18) )
                     if (du.get_hour() > 9) & (du.get_hour() < 18):
                         preClose = float(rt['pre_close'])
                     else:
